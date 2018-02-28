@@ -26,6 +26,7 @@
     <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
     <webjars-jquery.version>2.2.4</webjars-jquery.version>
     <wro4j.version>1.8.0</wro4j.version>
+    <docker.image.prefix>knalawad</docker.image.prefix>
 
     <cobertura.version>2.7</cobertura.version>
 
@@ -215,6 +216,27 @@
           </dependency>
         </dependencies>
       </plugin>
+      
+      
+	<plugin>
+	    <groupId>com.spotify</groupId>
+	    <artifactId>docker-maven-plugin</artifactId>
+	    <version>1.0.0</version>
+	    <configuration>
+	        <imageName>${docker.image.prefix}/springboot-petclinic</imageName>
+	        <baseImage>tomcat:8.0.20-jre8</baseImage>
+	        <!-- copy the service's jar file from target into the root directory of the image -->
+	        <resources>
+	            <resource>
+	                <targetPath>/usr/local/tomcat/webapps/</targetPath>
+	                <directory>${project.build.directory}</directory>
+	                <include>${project.name}.war</include>
+	            </resource>
+	        </resources>
+	    </configuration>
+	</plugin>
+
+
     </plugins>
   </build>
   <reporting>
