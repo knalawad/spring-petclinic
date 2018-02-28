@@ -2,11 +2,13 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.springframework.samples</groupId>
   <artifactId>spring-petclinic</artifactId>
   <version>1.0.0.RELEASE</version>
-
+  <packaging>war</packaging>
+  	
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -20,7 +22,7 @@
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+	<thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
     <!-- Web dependencies -->
     <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
     <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
@@ -53,6 +55,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
+      <exclusions>
+        <exclusion>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -217,27 +225,22 @@
         </dependencies>
       </plugin>
       
-      
+    <!-- DOCKERFILE MAVEN PLUGIN -->  
 	<plugin>
 	    <groupId>com.spotify</groupId>
-	    <artifactId>docker-maven-plugin</artifactId>
-	    <version>1.0.0</version>
-	    <configuration>
-	        <imageName>${docker.image.prefix}/springboot-petclinic</imageName>
-	        <baseImage>tomcat:8.0.20-jre8</baseImage>
-	        <!-- copy the service's jar file from target into the root directory of the image -->
-	        <resources>
-	            <resource>
-	                <targetPath>/usr/local/tomcat/webapps/</targetPath>
-	                <directory>${project.build.directory}</directory>
-	                <include>${project.name}.war</include>
-	            </resource>
-	        </resources>
-	    </configuration>
-	</plugin>
+	    <artifactId>dockerfile-maven-plugin</artifactId>
+	    <version>1.3.6</version>
+	      <configuration>
+                <repository>${docker.image.prefix}/${project.artifactId}</repository>
+				<buildArgs>
+				<WAR_FILE>target/${project.build.finalName}.war</WAR_FILE>
+				</buildArgs>
+          </configuration>
+	</plugin>	
 
 
     </plugins>
+    <finalName>springboot-petclinic</finalName>
   </build>
   <reporting>
     <plugins>
