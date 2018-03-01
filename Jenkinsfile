@@ -2,13 +2,13 @@ node {
   checkout scm
   env.PATH = "${tool 'apache-maven-3.5.2'}/bin:${env.PATH}"
   stage('Package') {
-    dir('webapp') {
+    dir('src') {
       sh 'mvn clean package -DskipTests'
     }
   }
 
   stage('Create Docker Image') {
-    dir('webapp') {
+    dir('src') {
       docker.build("knalawad/springboot-petclinic:${env.BUILD_NUMBER}")
     }
   }
@@ -36,7 +36,7 @@ node {
 
   stage('Run Tests') {
     try {
-      dir('webapp') {
+      dir('src') {
        // sh "mvn test"
         //docker.build("arungupta/docker-jenkins-pipeline:${env.BUILD_NUMBER}").push()
       }
