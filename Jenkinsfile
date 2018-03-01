@@ -3,7 +3,7 @@ node {
   env.PATH = "${tool 'apache-maven-3.5.2'}/bin:${env.PATH}"
   stage('Package') {
     //dir('src') {
-      sh 'mvn clean package -DskipTests'
+      bat 'mvn clean package -DskipTests'
     //}
   }
 
@@ -20,7 +20,7 @@ node {
 
       // Run application using Docker image
       // sh "DB=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' db`"
-      sh "docker run -p 8080:8080 knalawad/spring-petclinic:${env.BUILD_NUMBER}"
+      bat "docker run -p 8080:8080 knalawad/spring-petclinic:${env.BUILD_NUMBER}"
 
       // Run tests using Maven
       //dir ('webapp') {
