@@ -11,7 +11,7 @@ node {
 
 	
   stage('Create Docker Image') {
-  	  bat 'docker-machine.exe env default'
+  	  
   	  bat 'SET DOCKER_TLS_VERIFY=1'
   	  bat 'SET DOCKER_HOST=tcp://192.168.99.100:2376'
   	  bat 'SET DOCKER_CERT_PATH=C:/Users/BR39LH.AD/.docker/machine/machines/default'
@@ -19,6 +19,7 @@ node {
   	  bat 'SET COMPOSE_CONVERT_WINDOWS_PATHS=true'
   	  bat 'echo %DOCKER_HOST%'
   	  bat 'echo %DOCKER_CERT_PATH%'
+  	  bat '@FOR /f "tokens=*" %i IN ('docker-machine.exe env default') DO @%i'
 	  bat 'docker build -t knalawad/springboot-petclinic .'
   }
 
