@@ -1,3 +1,5 @@
+
+
 node {
   checkout scm
   env.PATH = "${tool 'apache-maven-3.5.2'}/bin:${env.PATH}"
@@ -8,7 +10,8 @@ node {
   }
 
   stage('Create Docker Image') {
-      bat 'docker build -t knalawad/springboot-petclinic .'
+	  bat docker-machine env default
+	  bat docker build -t knalawad/springboot-petclinic .
   }
 
   stage ('Run Application') {
