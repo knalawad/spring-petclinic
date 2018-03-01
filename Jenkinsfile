@@ -26,7 +26,7 @@ node {
     }
   }
 
-	stage ("Wait") {
+	stage ("Wait for app start") {
 	    echo "Waiting 70 seconds for deployment to complete prior starting smoke testing"
 	    sleep 70
 	}
@@ -39,6 +39,10 @@ node {
         return 1
     }
   }
+  
+  stage ("Push to DockerHub") {
+	    echo "Push complete"
+	}
 }
 
 def deploymentOk(){
