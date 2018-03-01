@@ -8,7 +8,7 @@ node {
   }
 
   stage('Create Docker Image') {
-      bat 'docker build -t knalawad/springboot-petclinic'
+      bat 'docker build -t knalawad/springboot-petclinic .'
   }
 
   stage ('Run Application') {
