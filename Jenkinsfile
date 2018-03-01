@@ -1,4 +1,3 @@
-SmokeTests smokeTests = new SmokeTests(this)
 node {
   checkout scm
   env.PATH = "${tool 'apache-maven-3.5.2'}/bin:${env.PATH}"
@@ -27,16 +26,30 @@ node {
     }
   }
 
-  stage('Run Tests') {
-    try {
-    //  dir('src') {
-       // sh "mvn test"
-        //docker.build("arungupta/docker-jenkins-pipeline:${env.BUILD_NUMBER}").push()
-      //}
-    } catch (error) {
-
-    } finally {
-      junit '**/target/surefire-reports/*.xml'
+  stage('Smoke Tests') {
+    def workspacePath = pwd()
+    bat 'curl --retry-delay 10 --retry 5 http://localhost:10000/info -o ${workspacePath}/info.json'
+    if (deploymentOk()){
+        return 0
+    } else {
+        return 1
     }
   }
+}
+
+def deploymentOk(){
+    def workspacePath = pwd()
+    expectedCommitid = new File("${workspacePath}/expectedCommitid.txt").text.trim()
+    actualCommitid = readCommitidFromJson()
+    println "expected commitid from txt: ${expectedCommitid}"
+    println "actual commitid from json: ${actualCommitid}"
+    return expectedCommitid == actualCommitid
+}
+ 
+def readCommitidFromJson() {
+    def workspacePath = pwd()
+    def slurper = new JsonSlurper()
+    def json = slurper.parseText(new File("${workspacePath}/info.json").text)
+    def commitid = json.app.commitid
+    return commitid
 }
