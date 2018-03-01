@@ -1,3 +1,4 @@
+import groovy.json.JsonSlurper;
 node {
   checkout scm
   env.PATH = "${tool 'apache-maven-3.5.2'}/bin:${env.PATH}"
