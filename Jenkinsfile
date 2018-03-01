@@ -8,7 +8,7 @@ node {
   }
 
   stage('Create Docker Image') {
-      bat 'docker.build("knalawad/springboot-petclinic:${env.BUILD_NUMBER}")'
+      bat 'docker build -t knalawad/springboot-petclinic'
   }
 
   stage ('Run Application') {
