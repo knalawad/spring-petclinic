@@ -34,7 +34,7 @@ node {
 
   stage('Smoke Tests') {
     def workspacePath = pwd()
-    bat 'curl --retry-delay 10 --retry 5 http://192.168.99.100:8080/info -o ${workspacePath}/info.json'
+    bat 'curl --retry-delay 10 --retry 5 http://192.168.99.100:8081/info -o ${workspacePath}/info.json'
     if (deploymentOk()){
         return 0
     } else {
