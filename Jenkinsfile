@@ -10,7 +10,7 @@ node {
   }
 
   stage('Create Docker Image') {
-	  bat 'docker build -t knalawad/springboot-petclinic:${env.BUILD_NUMBER} .'
+	  bat 'docker build -t knalawad/springboot-petclinic .'
   }
 
   stage ('Run Application') {
@@ -20,7 +20,7 @@ node {
 
       // Run application using Docker image
       // sh "DB=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' db`"
-      bat 'docker run -p 8080:8080 knalawad/spring-petclinic:${env.BUILD_NUMBER}'
+      bat 'docker run -p 8080:8080 knalawad/spring-petclinic'
 
       // Run tests using Maven
       //dir ('webapp') {
