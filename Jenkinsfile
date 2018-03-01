@@ -33,7 +33,8 @@ node {
 	}
 
   stage('Smoke Tests') {
-    def workspacePath = bat 'cd'
+  	bat 'echo %cd%'
+    def workspacePath = bat 'echo %cd%'
     bat 'curl --retry-delay 10 --retry 5 http://192.168.99.100:8081/info -o ${workspacePath}/info.json'
     if (deploymentOk()){
         return 0
@@ -44,7 +45,7 @@ node {
 }
 
 def deploymentOk(){
-    def workspacePath = bat 'cd'
+    def workspacePath = bat 'echo %cd%'
     expectedCommitid = new File("${workspacePath}/expectedCommitid.txt").text.trim()
     actualCommitid = readCommitidFromJson()
     println "expected commitid from txt: ${expectedCommitid}"
@@ -53,7 +54,7 @@ def deploymentOk(){
 }
  
 def readCommitidFromJson() {
-    def workspacePath = bat 'cd'
+    def workspacePath = bat 'echo %cd%'
     def slurper = new JsonSlurper()
     def json = slurper.parseText(new File("${workspacePath}/info.json").text)
     def commitid = json.app.commitid
