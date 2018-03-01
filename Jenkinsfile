@@ -10,8 +10,8 @@ node {
   }
 
   stage('Create Docker Image') {
-	  bat docker-machine env default
-	  bat docker build -t knalawad/springboot-petclinic .
+	  bat 'docker-machine env default'
+	  bat 'docker build -t knalawad/springboot-petclinic .'
   }
 
   stage ('Run Application') {
