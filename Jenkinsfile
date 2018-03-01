@@ -19,8 +19,7 @@ node {
   	  bat 'SET COMPOSE_CONVERT_WINDOWS_PATHS=true'
   	  bat 'echo %DOCKER_HOST%'
   	  bat 'echo %DOCKER_CERT_PATH%'
-  	  bat '@FOR /f "tokens=*" %i IN ('docker-machine.exe env default') DO @%i'
-	  bat 'docker build -t knalawad/springboot-petclinic .'
+  	  bat 'docker build -t knalawad/springboot-petclinic .'
   }
 
   stage ('Run Application') {
