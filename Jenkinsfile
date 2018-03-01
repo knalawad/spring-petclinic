@@ -33,9 +33,7 @@ node {
 	}
 
   stage('Smoke Tests') {
-    def workspacePath = bat 'echo %cd%'
-    echo ${workspacePath}
-    bat 'curl --retry-delay 10 --retry 5 http://192.168.99.100:8081/info -o ${workspacePath}/info.json'
+       bat 'curl --retry-delay 10 --retry 5 http://192.168.99.100:8081/info -o C:/Users/BR39LH.AD/.jenkins/workspace/springbootexample/info.json'
     if (deploymentOk()){
         return 0
     } else {
@@ -46,7 +44,7 @@ node {
 
 def deploymentOk(){
     def workspacePath = bat 'echo %cd%'
-    expectedCommitid = new File("${workspacePath}/expectedCommitid.txt").text.trim()
+    expectedCommitid = new File("C:/Users/BR39LH.AD/.jenkins/workspace/springbootexample/expectedCommitid.txt").text.trim()
     actualCommitid = readCommitidFromJson()
     println "expected commitid from txt: ${expectedCommitid}"
     println "actual commitid from json: ${actualCommitid}"
@@ -56,7 +54,7 @@ def deploymentOk(){
 def readCommitidFromJson() {
     def workspacePath = bat 'echo %cd%'
     def slurper = new JsonSlurper()
-    def json = slurper.parseText(new File("${workspacePath}/info.json").text)
+    def json = slurper.parseText(new File("C:/Users/BR39LH.AD/.jenkins/workspace/springbootexample/info.json").text)
     def commitid = json.app.commitid
     return commitid
 }
