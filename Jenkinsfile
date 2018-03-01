@@ -29,7 +29,7 @@ node {
 
 	stage ("Wait") {
 	    echo "Waiting 70 seconds for deployment to complete prior starting smoke testing"
-	    sleep 70
+	    sleep 10
 	}
 
   stage('Smoke Tests') {
