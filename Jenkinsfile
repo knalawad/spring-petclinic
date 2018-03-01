@@ -29,7 +29,7 @@ node {
 
 	stage ("Wait") {
 	    echo "Waiting 70 seconds for deployment to complete prior starting smoke testing"
-	    sleep 10
+	    sleep 70
 	}
 
   stage('Smoke Tests') {
@@ -43,7 +43,6 @@ node {
 }
 
 def deploymentOk(){
-    def workspacePath = bat 'echo %cd%'
     expectedCommitid = new File("C:/Users/BR39LH.AD/.jenkins/workspace/springbootexample/expectedCommitid.txt").text.trim()
     actualCommitid = readCommitidFromJson()
     println "expected commitid from txt: ${expectedCommitid}"
@@ -52,7 +51,6 @@ def deploymentOk(){
 }
  
 def readCommitidFromJson() {
-    def workspacePath = bat 'echo %cd%'
     def slurper = new JsonSlurper()
     def json = slurper.parseText(new File("C:/Users/BR39LH.AD/.jenkins/workspace/springbootexample/info.json").text)
     def commitid = json.app.commitid
