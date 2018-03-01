@@ -33,8 +33,8 @@ node {
 	}
 
   stage('Smoke Tests') {
-  	bat 'echo %cd%'
     def workspacePath = bat 'echo %cd%'
+    echo ${workspacePath}
     bat 'curl --retry-delay 10 --retry 5 http://192.168.99.100:8081/info -o ${workspacePath}/info.json'
     if (deploymentOk()){
         return 0
