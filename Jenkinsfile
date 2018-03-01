@@ -3,11 +3,7 @@
 node {
   checkout scm
   env.PATH = "${tool 'apache-maven-3.5.2'}/bin:${env.PATH}"
-  stage('Package') {
-    //dir('src') {
-      bat 'mvn clean package -DskipTests'
-    //}
-  }
+ 
 
 	
   stage('Create Docker Image') {
