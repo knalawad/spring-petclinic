@@ -7,7 +7,7 @@ node {
 
 	
   stage('Create Docker Image') {
-  	  bat 'C:/Work/MB/docker-spring-petclinic/spring-petclinic/myscript.cmd'
+  	  bat 'myscript.cmd'
   }
 
   stage ('Run Application') {
