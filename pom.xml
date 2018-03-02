@@ -136,7 +136,14 @@
 	</dependencies>
 	<profiles>
 		<profile>
-			<id>test</id>
+			<id>dev</id>
+			<properties>
+	            <spring.profiles.active>development</spring.profiles.active>
+	        </properties>
+			<!-- The development profile is active by default -->
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
 			<build>
 				<plugins>
 					<plugin>

@@ -5,7 +5,7 @@ node {
  
  stage('Package') {
  	  def commitid = bat(returnStdout: true, script: 'git rev-parse HEAD').trim()
-      bat 'mvn clean package -Ptest -DskipTests'
+      bat 'mvn clean package -Pdev -DskipTests'
   }
 	
   stage('Create Docker Image') {
